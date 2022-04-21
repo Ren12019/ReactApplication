@@ -41,6 +41,7 @@ module.exports = {
           template: 'src/templates/index.html',
       }),
     ],
+    devtool: 'inline-source-map',
     // webpack dev server‚Ìİ’è
     // contentBase‚Ístatic‚Ìdirectory‚É•ÏX‚³‚ê‚Ä‚¢‚éB
     devServer: {
