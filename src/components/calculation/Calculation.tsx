@@ -7,7 +7,7 @@ const Calculation = () => {
   const numberList = [...(Array(3) as [number])].map((_, i) => i + 1);
   const [isDecimal, setIsDecimal] = useState<boolean>(false);
   const [isInit, setIsInit] = useState<boolean>(true);
-  const [isAfterEqual, setIsAfterEqual] = useState<boolean>(false);
+  const [isAfterEqual, setIsAfterEqual] = useState<boolean>(true);
   const [displayNumber, setDisplayNumber] = useState<number>(0);
   const [calculateResult, setCalculateResult] = useState<number>(0);
   const [calculateNumber, setCalculateNumber] = useState<number>(0);
@@ -21,10 +21,7 @@ const Calculation = () => {
   // 入力を表示
   useEffect(() => {
     setDisplayNumber(calculateNumber);
-    if(isInit) {
-      setCalculateResult(calculateNumber);
-    }
-  }, [calculateNumber, isInit]);
+  }, [calculateNumber]);
 
   useEffect(()=>{
     if(!isInit) {
@@ -75,15 +72,18 @@ const Calculation = () => {
   const onClickEqual = () => {
     calculate(calculateType);
     setIsInit(true);
-    if(!isAfterEqual) {
-      setIsAfterEqual(true);
-    }
+    setIsAfterEqual(true);
   };
 
   const onClickNumber = (inputNumber: number) => {
-    if(isAfterEqual) {
-      setCalculateNumber(inputNumber);
-      setIsAfterEqual(false);
+    if(isInit) {
+      if(isAfterEqual) {
+        setCalculateNumber(0);
+        setCalculateResult(inputNumber);
+        setIsAfterEqual(false);
+        return;
+      }
+      setCalculateResult(calculateResult * 10 + inputNumber);
       return;
     }
     setCalculateNumber(calculateNumber * 10 + inputNumber);
@@ -98,7 +98,6 @@ const Calculation = () => {
     setCalculateResult(0);
     setCalculateType('None');
     setIsInit(true);
-    setIsAfterEqual(false);
   };
 
   const onClickReverseResult = () => {
@@ -170,7 +169,7 @@ const Calculation = () => {
           {numberList.map((rowNumber) => {
             const rowNumberList = [...numberList];
             return (
-              <>
+              <React.Fragment key={rowNumber}>
                 {rowNumberList.map((columnNumber) => {
                   const correctionValue = 3 * (rowNumber - 1);
                   const buttonNumber = columnNumber + correctionValue;
@@ -181,7 +180,7 @@ const Calculation = () => {
                   };
 
                   return (
-                    <div style={buttonStyle}>
+                    <div style={buttonStyle} key={buttonNumber}>
                       <CalculationButton
                         value={String(buttonNumber)}
                         tabIndex={0}
@@ -192,7 +191,7 @@ const Calculation = () => {
                     </div>
                   );
                 })}
-              </>
+              </React.Fragment>
             );
           })}
         </div>
