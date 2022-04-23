@@ -23,6 +23,16 @@ module.exports = {
           test: /\.tsx?$/,
           // TypeScript ‚ðƒRƒ“ƒpƒCƒ‹‚·‚é
           use: "ts-loader"
+        },
+        {
+          test: /\.css/,
+          use: [
+            "style-loader",
+            {
+              loader: "css-loader",
+              options: { url: false }
+            }
+          ]
         }
       ]
     },
