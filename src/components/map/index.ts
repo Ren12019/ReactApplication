@@ -1,1 +1,1 @@
-export { MapComponent as Map } from "./map";
+export { MapComponent as Map } from './map';

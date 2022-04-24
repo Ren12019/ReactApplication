@@ -1,23 +1,27 @@
-import React from "react";
-import { MapBrowserEvent } from "ol";
-import VectorLayer from "ol/layer/Vector";
-import VectorSource from "ol/source/Vector";
-import Feature from "ol/Feature";
-import Point from "ol/geom/Point";
-import Style from "ol/style/Style";
-import Circle from "ol/style/Circle";
-import Fill from "ol/style/Fill";
-import Stroke from "ol/style/Stroke";
-import { MapContext } from "../../map";
-import { IMapContext } from "../../map-types";
-import { TVectorLayerProps, TVectorLayerComponentProps } from "./vector-types";
+import React from 'react';
+import { MapBrowserEvent } from 'ol';
+import VectorLayer from 'ol/layer/Vector';
+import VectorSource from 'ol/source/Vector';
+import Feature from 'ol/Feature';
+import Point from 'ol/geom/Point';
+import Style from 'ol/style/Style';
+import Circle from 'ol/style/Circle';
+import Fill from 'ol/style/Fill';
+import Stroke from 'ol/style/Stroke';
+import { MapContext } from '../../map';
+import { IMapContext } from '../../map-types';
+import { TVectorLayerProps, TVectorLayerComponentProps } from './vector-types';
 
-class VectorLayerComponent extends React.PureComponent<
-  TVectorLayerComponentProps
-> {
-  layer: VectorLayer;
+class VectorLayerComponent extends React.PureComponent<TVectorLayerComponentProps> {
+  layer: VectorLayer<any>;
 
   source: VectorSource;
+
+  constructor(props: TVectorLayerComponentProps) {
+    super(props);
+    this.layer = new VectorLayer();
+    this.source = new VectorSource();
+  }
 
   componentDidMount() {
     this.source = new VectorSource({
@@ -28,8 +32,10 @@ class VectorLayerComponent extends React.PureComponent<
       source: this.source,
     });
 
+    // eslint-disable-next-line react/destructuring-assignment
     this.props.map.addLayer(this.layer);
-    this.props.map.on("singleclick", this.onMapClick);
+    // eslint-disable-next-line react/destructuring-assignment
+    this.props.map.on('singleclick', this.onMapClick);
   }
   /*
   componentWillUnmount() {
@@ -46,20 +52,21 @@ class VectorLayerComponent extends React.PureComponent<
   }
   */
 
-  onMapClick = (event: MapBrowserEvent) => {
+  onMapClick = (event: MapBrowserEvent<any>) => {
     const featureToAdd = new Feature({
       geometry: new Point(event.coordinate),
     });
     const style = new Style({
       image: new Circle({
         radius: 6,
-        fill: new Fill({color: 'red'}),
+        fill: new Fill({ color: 'red' }),
         stroke: new Stroke({
-          color: [0,0,0], width: 2
-        })
-      })
+          color: [0, 0, 0],
+          width: 2,
+        }),
+      }),
     });
-    featureToAdd.setStyle(style);    
+    featureToAdd.setStyle(style);
     this.source.clear();
     this.source.addFeatures([featureToAdd]);
   };
@@ -73,12 +80,16 @@ export const VectorLayerWithContext = (props: TVectorLayerProps) => {
   console.log(props);
   return (
     <MapContext.Consumer>
-      {(mapContext: IMapContext | void) => {
-        if (mapContext) {
-          console.log(mapContext);
-          return <VectorLayerComponent {...props} map={mapContext.map} />;
+      {
+        // eslint-disable-next-line consistent-return
+        (mapContext: IMapContext | void) => {
+          if (mapContext) {
+            console.log(mapContext);
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            return <VectorLayerComponent {...props} map={mapContext.map} />;
+          }
         }
-      }}
+      }
     </MapContext.Consumer>
   );
 };

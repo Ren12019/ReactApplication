@@ -11,7 +11,7 @@ const Calculation = () => {
   const [displayNumber, setDisplayNumber] = useState<number>(0);
   const [calculateResult, setCalculateResult] = useState<number>(0);
   const [calculateNumber, setCalculateNumber] = useState<number>(0);
-  const [calculateType, setCalculateType] = useState<CalculateType>('None')
+  const [calculateType, setCalculateType] = useState<CalculateType>('None');
 
   // 結果を表示
   useEffect(() => {
@@ -23,11 +23,11 @@ const Calculation = () => {
     setDisplayNumber(calculateNumber);
   }, [calculateNumber]);
 
-  useEffect(()=>{
-    if(!isInit) {
-      setCalculateNumber(0)
+  useEffect(() => {
+    if (!isInit) {
+      setCalculateNumber(0);
     }
-  }, [isInit])
+  }, [isInit]);
 
   const calculate = (type: CalculateType) => {
     switch (type) {
@@ -51,7 +51,7 @@ const Calculation = () => {
   const onClickCalculationSymbolImpl = (calculationSymbolType: CalculateType) => {
     setIsInit(false);
     setCalculateType(calculationSymbolType);
-  }
+  };
 
   const onClickAdd = () => {
     onClickCalculationSymbolImpl('Add');
@@ -76,8 +76,8 @@ const Calculation = () => {
   };
 
   const onClickNumber = (inputNumber: number) => {
-    if(isInit) {
-      if(isAfterEqual) {
+    if (isInit) {
+      if (isAfterEqual) {
         setCalculateNumber(0);
         setCalculateResult(inputNumber);
         setIsAfterEqual(false);
@@ -91,7 +91,7 @@ const Calculation = () => {
 
   const onClickDecimal = () => {
     setIsDecimal(true);
-  }
+  };
 
   const onClickAllClear = () => {
     setCalculateNumber(0);
@@ -101,8 +101,8 @@ const Calculation = () => {
   };
 
   const onClickReverseResult = () => {
-    setCalculateResult(calculateResult * (-1))
-  }
+    setCalculateResult(calculateResult * -1);
+  };
 
   const plusNumber = () => {
     setCalculateNumber(calculateNumber + 1);
@@ -116,8 +116,8 @@ const Calculation = () => {
     backgroundColor: '#555555',
     paddingRight: '10px',
     boxSizing: 'border-box',
-    textAlign: 'right'
-  }
+    textAlign: 'right',
+  };
 
   const firstRowStyle: CSSProperties = {
     display: 'grid',
@@ -126,8 +126,8 @@ const Calculation = () => {
   };
 
   const flexStyle: CSSProperties = {
-    display: 'flex'
-  }
+    display: 'flex',
+  };
 
   const tenkeyContainerStyle: CSSProperties = {
     display: 'grid',
@@ -155,9 +155,7 @@ const Calculation = () => {
           {calculateResult}+{calculateNumber}
         </span>
       </div>
-      <div style={displayStyle}>
-        {displayNumber}
-      </div>
+      <div style={displayStyle}>{displayNumber}</div>
       <div style={firstRowStyle}>
         <CalculationButton value="AC" tabIndex={0} onClick={onClickAllClear} />
         <CalculationButton value="+/-" tabIndex={0} onClick={onClickReverseResult} />
@@ -202,16 +200,16 @@ const Calculation = () => {
         </div>
       </div>
       <div style={lastRowStyle}>
-      <CalculationButton
-        value="0"
-        tabIndex={0}
-        isWide
-        onClick={() => {
-          onClickNumber(0);
-        }}
-      />
-      <CalculationButton value="." tabIndex={0} onClick={onClickDecimal} />
-      <CalculationButton value="=" tabIndex={0} onClick={onClickEqual} />
+        <CalculationButton
+          value="0"
+          tabIndex={0}
+          isWide
+          onClick={() => {
+            onClickNumber(0);
+          }}
+        />
+        <CalculationButton value="." tabIndex={0} onClick={onClickDecimal} />
+        <CalculationButton value="=" tabIndex={0} onClick={onClickEqual} />
       </div>
     </div>
   );

@@ -1,1 +1,1 @@
-export { VectorLayerWithContext as VectorLayer } from "./vector";
+export { VectorLayerWithContext as VectorLayer } from './vector';

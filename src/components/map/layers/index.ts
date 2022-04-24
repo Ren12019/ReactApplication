@@ -1,1 +1,1 @@
-export { VectorLayer } from "./vector";
+export { VectorLayer } from './vector';
