@@ -1,6 +1,6 @@
 import React from 'react';
 import Calculation from '../calculation/Calculation';
-import MapPane from '../map/MapPane';
+import MapPane from '../map-pane/MapPane';
 
 const App = () => (
   <div>
