@@ -149,12 +149,6 @@ const Calculation = () => {
 
   return (
     <div>
-      <h2>Calculation</h2>
-      <div>
-        <span>
-          {calculateResult}+{calculateNumber}
-        </span>
-      </div>
       <div style={displayStyle}>{displayNumber}</div>
       <div style={firstRowStyle}>
         <CalculationButton value="AC" tabIndex={0} onClick={onClickAllClear} />

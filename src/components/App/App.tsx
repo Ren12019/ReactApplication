@@ -4,6 +4,7 @@ import MapPane from '../map/MapPane';
 
 const App = () => (
   <div>
+    <h2>Calculation</h2>
     <Calculation />
     <h2>Map</h2>
     <MapPane />
