@@ -23,6 +23,16 @@ module.exports = {
           test: /\.tsx?$/,
           // TypeScript をコンパイルする
           use: "ts-loader"
+        },
+        {
+          test: /\.css/,
+          use: [
+            "style-loader",
+            {
+              loader: "css-loader",
+              options: { url: false }
+            }
+          ]
         }
       ]
     },
@@ -41,6 +51,7 @@ module.exports = {
           template: 'src/templates/index.html',
       }),
     ],
+    devtool: 'inline-source-map',
     // webpack dev serverの設定
     // contentBaseはstaticのdirectoryに変更されている。
     devServer: {
